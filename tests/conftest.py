@@ -77,7 +77,7 @@ def category_fixture():
 @fixture(params=[0, 1], autouse=True)
 def category_fixture_positive(request, category_fixture):
     Category.category_count = 0
-    Category.products_count = 0
+    Category.product_count = 0
 
     data = []
     for ind, category_dict in enumerate(category_fixture, start=1):
@@ -91,3 +91,23 @@ def category_fixture_positive(request, category_fixture):
         data.append((category_dict, original_name, original_description, original_product_count, 1))
 
     return data[request.param]
+
+
+@fixture
+def sample_product():
+    return Product("Iphone 15", "512GB, Gray space", 210000, 5)
+
+
+@fixture
+def another_product():
+    return Product("Samsung Galaxy", "256GB, Black", 180000, 3)
+
+
+@fixture
+def product_list(sample_product, another_product):
+    return [sample_product, another_product]
+
+
+@fixture
+def one_category_fixture(product_list):
+    return Category("Электроника", "Описание электроники", product_list)
