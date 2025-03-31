@@ -35,10 +35,10 @@ def test_price_setter(sample_product, monkeypatch):
     assert sample_product.price == 220000
     sample_product.price = -1000
     assert sample_product.price == 220000
-    monkeypatch.setattr('builtins.input', lambda _: "y")
+    monkeypatch.setattr("builtins.input", lambda _: "y")
     sample_product.price = 200000
     assert sample_product.price == 200000
-    monkeypatch.setattr('builtins.input', lambda _: "n")
+    monkeypatch.setattr("builtins.input", lambda _: "n")
     sample_product.price = 190000
     assert sample_product.price == 200000
 
