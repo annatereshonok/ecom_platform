@@ -111,3 +111,12 @@ def product_list(sample_product, another_product):
 @fixture
 def one_category_fixture(product_list):
     return Category("Электроника", "Описание электроники", product_list)
+
+
+@fixture(params=[0, 1])
+def product_str_fixture(request, product_list):
+    data = [
+        (product_list[0], 'Iphone 15, 210000 руб. Остаток: 5 шт.'),
+        (product_list[1], 'Samsung Galaxy, 180000 руб. Остаток: 3 шт.')
+    ]
+    return data[request.param]
