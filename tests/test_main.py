@@ -1,6 +1,4 @@
-import pytest
-
-from src.main import Category, Product, CategoryIterator
+from src.main import Category, CategoryIterator, Product
 
 
 def test_product_positive(product_fixture_positive):
@@ -89,7 +87,7 @@ def test_products_add(sample_product, another_product):
 
 def test_category_str(one_category_fixture):
     category = one_category_fixture
-    assert str(category) == 'Электроника, количество продуктов: 8 шт.'
+    assert str(category) == "Электроника, количество продуктов: 8 шт."
 
 
 def test_iteration_over_products(one_category_fixture):
