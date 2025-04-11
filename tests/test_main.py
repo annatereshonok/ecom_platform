@@ -1,4 +1,6 @@
-from src.main import Category, CategoryIterator, Product
+import pytest
+
+from src.main import Category, CategoryIterator, LawnGrass, Product, Smartphone
 
 
 def test_product_positive(product_fixture_positive):
@@ -95,3 +97,55 @@ def test_iteration_over_products(one_category_fixture):
     products = list(iterator)
     assert products[0].name == "Iphone 15"
     assert products[1].name == "Samsung Galaxy"
+
+
+def test_smartphone_creation():
+    phone = Smartphone(
+        name="iPhone",
+        description="Флагманский смартфон",
+        price=120000,
+        quantity=5,
+        model="15 Pro Max",
+        memory=256,
+        color="black",
+        efficiency=0.92,
+    )
+
+    assert phone.name == "iPhone"
+    assert phone.model == "15 Pro Max"
+    assert phone.memory == 256
+    assert phone.color == "black"
+    assert phone.efficiency == 0.92
+
+
+def test_lawngrass_creation():
+    grass = LawnGrass(
+        name="Зелёная трава",
+        description="Для газонов",
+        price=500,
+        quantity=20,
+        country="Россия",
+        germination_period=14.0,
+        color="зелёный",
+    )
+
+    assert grass.name == "Зелёная трава"
+    assert grass.country == "Россия"
+    assert grass.germination_period == 14.0
+    assert grass.color == "зелёный"
+
+
+def test_add_invalid_product_raises():
+    not_a_product = object()
+    cat = Category("Техника", "Электроника", [])
+
+    with pytest.raises(TypeError, match="Можно добавлять только объекты Product"):
+        cat.add_product(not_a_product)
+
+
+def test_add_different_type_products_raises():
+    phone = Smartphone("iPhone", "смартфон", 100000, 2, "15 Pro", 256, "чёрный", 0.9)
+    grass = LawnGrass("Трава", "газон", 500, 4, "Россия", 14.0, "зелёный")
+
+    with pytest.raises(TypeError, match="Нельзя складывать Smartphone и LawnGrass"):
+        _ = phone + grass
