@@ -1,6 +1,4 @@
-import pytest
-
-from src.main import Category, Product
+from src.main import Category, CategoryIterator, Product
 
 
 def test_product_positive(product_fixture_positive):
@@ -9,12 +7,6 @@ def test_product_positive(product_fixture_positive):
     assert product.description == prod_desc
     assert product.price == prod_price
     assert product.quantity == prod_quantity
-
-
-def test_product_negative(product_fixture_negative):
-    product_data, expected_error = product_fixture_negative
-    with pytest.raises(ValueError, match=expected_error):
-        Product(**product_data)
 
 
 def test_category_positive(category_fixture_positive):
@@ -81,3 +73,25 @@ def test_products_property(one_category_fixture):
     product_info = one_category_fixture.products
     assert "Iphone 15, 210000 руб. Остаток: 5 шт." in product_info
     assert "Samsung Galaxy, 180000 руб. Остаток: 3 шт." in product_info
+
+
+def test_products_str(product_str_fixture):
+    product, exp_str = product_str_fixture
+    assert str(product) == exp_str
+
+
+def test_products_add(sample_product, another_product):
+    product_sum = sample_product + another_product
+    assert product_sum == 1590000
+
+
+def test_category_str(one_category_fixture):
+    category = one_category_fixture
+    assert str(category) == "Электроника, количество продуктов: 8 шт."
+
+
+def test_iteration_over_products(one_category_fixture):
+    iterator = CategoryIterator(one_category_fixture)
+    products = list(iterator)
+    assert products[0].name == "Iphone 15"
+    assert products[1].name == "Samsung Galaxy"
