@@ -1,6 +1,6 @@
 import pytest
 
-from src.main import Category, CategoryIterator, LawnGrass, Product, Smartphone, MixinLog
+from src.main import Category, CategoryIterator, LawnGrass, Product, Smartphone
 
 
 def test_product_positive(product_fixture_positive):
@@ -152,7 +152,7 @@ def test_add_different_type_products_raises():
 
 
 def test_mixin_log_output_on_product_creation(capsys):
-    product = Product("Товар", "Описание", 1500, 3)
+    _ = Product("Товар", "Описание", 1500, 3)
     captured = capsys.readouterr()
 
     assert "[LOG] Создан объект класса Product" in captured.out
