@@ -1,6 +1,6 @@
 import pytest
 
-from src.main import Category, CategoryIterator, LawnGrass, Product, Smartphone
+from src.main import Category, CategoryIterator, LawnGrass, Product, Smartphone, MixinLog
 
 
 def test_product_positive(product_fixture_positive):
@@ -149,3 +149,13 @@ def test_add_different_type_products_raises():
 
     with pytest.raises(TypeError, match="Нельзя складывать Smartphone и LawnGrass"):
         _ = phone + grass
+
+
+def test_mixin_log_output_on_product_creation(capsys):
+    product = Product("Товар", "Описание", 1500, 3)
+    captured = capsys.readouterr()
+
+    assert "[LOG] Создан объект класса Product" in captured.out
+    assert "Товар" in captured.out
+    assert "1500" in captured.out
+    assert "3" in captured.out
