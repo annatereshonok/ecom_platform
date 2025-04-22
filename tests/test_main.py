@@ -159,3 +159,25 @@ def test_mixin_log_output_on_product_creation(capsys):
     assert "Товар" in captured.out
     assert "1500" in captured.out
     assert "3" in captured.out
+
+
+def test_average_price_with_products():
+    products = [
+        Product("Товар 1", "Описание", 100, 2),
+        Product("Товар 2", "Описание", 200, 3),
+        Product("Товар 3", "Описание", 300, 1),
+    ]
+    category = Category("Категория", "Описание", products)
+
+    expected = (100 + 200 + 300) / 3
+    assert category.middle_price() == expected
+
+
+def test_average_price_with_no_products():
+    category = Category("Пустая", "Нет товаров", [])
+    assert category.middle_price() == 0
+
+
+def test_zero_quantity_product():
+    with pytest.raises(ValueError, match="Товар с нулевым количеством не может быть добавлен."):
+        _ = Product("Товар", "Описание", 1500, 0)
